@@ -1,0 +1,78 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #1a1a1a;
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.game-container {
+    text-align: center;
+}
+
+h1 {
+    color: #00ffcc;
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+#memory-board {
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    gap: 10px;
+}
+
+.card {
+    width: 100px;
+    height: 100px;
+    background-color: #333;
+    border: 3px solid transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    transform: scale(1);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.1);
+    border-color: #00ffcc;
+}
+
+.card.flipped, .card.matched {
+    background-color: #00ffcc;
+    transform: rotateY(180deg);
+}
+
+#moves {
+    margin-top: 20px;
+    font-size: 1.5rem;
+}
+
+/* Estilos RGB para las cartas seleccionadas */
+.card.flipped {
+    border: 3px solid;
+    animation: rgb-border 1s infinite;
+}
+
+@keyframes rgb-border {
+    0% {
+        border-color: #ff0000;
+    }
+    33% {
+        border-color: #00ff00;
+    }
+    66% {
+        border-color: #0000ff;
+    }
+    100% {
+        border-color: #ff0000;
+    }
+}
