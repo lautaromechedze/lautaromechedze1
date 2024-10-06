@@ -1,99 +1,71 @@
 const cardsArray = ['🍎', '🍌', '🍇', '🍓', '🍒', '🍍', '🥝', '🍉'];
-let cards = [...cardsArray, ...cardsArray]; // Duplicar las cartas para hacer parejas
-let firstCard = null;
-let secondCard = null;
+let cardValues = [...cardsArray, ...cardsArray]; // Duplicamos las cartas
+let cardsChosen = [];
+let cardsChosenId = [];
 let moves = 0;
-let lockBoard = false; // Evita que se puedan voltear más cartas mientras se chequean dos
+let matchedCards = [];
+const gameBoard = document.getElementById('game-board');
+const movesDisplay = document.getElementById('moves');
 
-const memoryBoard = document.getElementById('memory-board');
-const movesCounter = document.getElementById('moves');
-
-// Mezclar cartas
-cards = cards.sort(() => 0.5 - Math.random());
-
-// Crear el tablero con cartas
-cards.forEach(cardValue => {
-    const cardElement = createCard(cardValue);
-    memoryBoard.appendChild(cardElement);
-});
-
-function createCard(cardValue) {
-    const cardElement = document.createElement('div');
-    cardElement.classList.add('card');
-    cardElement.dataset.value = cardValue;
-    cardElement.addEventListener('click', flipCard);
-    return cardElement;
+function createBoard() {
+    cardValues.sort(() => 0.5 - Math.random()); // Mezclar cartas
+    for (let i = 0; i < cardValues.length; i++) {
+        const card = document.createElement('div');
+        card.classList.add('card');
+        card.setAttribute('data-id', i);
+        card.addEventListener('click', flipCard);
+        gameBoard.appendChild(card);
+    }
 }
 
 function flipCard() {
-    if (lockBoard || this === firstCard || this.classList.contains('flipped')) return;
+    const selected = this;
+    const cardId = selected.getAttribute('data-id');
 
-    this.classList.add('flipped');
-    this.innerText = this.dataset.value;
-
-    if (!firstCard) {
-        // Si no hay una carta volteada, guarda esta como la primera
-        firstCard = this;
-    } else {
-        // Segunda carta volteada
-        secondCard = this;
-        lockBoard = true; // Bloquea el tablero mientras se chequean las cartas
-        checkMatch();
+    if (cardsChosenId.length < 2 && !matchedCards.includes(cardId) && !cardsChosenId.includes(cardId)) {
+        selected.textContent = cardValues[cardId];
+        selected.classList.add('flipped');
+        cardsChosen.push(cardValues[cardId]);
+        cardsChosenId.push(cardId);
+        if (cardsChosen.length === 2) {
+            setTimeout(checkMatch, 500);
+        }
     }
 }
 
 function checkMatch() {
-    moves++;
-    movesCounter.innerText = `Movimientos: ${moves}`;
+    const cards = document.querySelectorAll('.card');
+    const [firstCardId, secondCardId] = cardsChosenId;
 
-    if (firstCard.dataset.value === secondCard.dataset.value) {
-        // Si coinciden, marcarlas como "matched"
-        firstCard.classList.add('matched');
-        secondCard.classList.add('matched');
-        resetCards();
-        checkIfGameWon(); // Llamamos la función para verificar si todas las cartas están emparejadas
+    if (cardsChosen[0] === cardsChosen[1]) {
+        matchedCards.push(firstCardId, secondCardId);
+        cards[firstCardId].removeEventListener('click', flipCard);
+        cards[secondCardId].removeEventListener('click', flipCard);
     } else {
-        // Si no coinciden, voltea ambas de nuevo
-        setTimeout(() => {
-            firstCard.classList.remove('flipped');
-            secondCard.classList.remove('flipped');
-            firstCard.innerText = '';
-            secondCard.innerText = '';
-            resetCards();
-        }, 1000);
+        cards[firstCardId].textContent = '';
+        cards[secondCardId].textContent = '';
+        cards[firstCardId].classList.remove('flipped');
+        cards[secondCardId].classList.remove('flipped');
     }
-}
+    
+    cardsChosen = [];
+    cardsChosenId = [];
+    moves++;
+    movesDisplay.textContent = `Movimientos: ${moves}`;
 
-function checkIfGameWon() {
-    const matchedCards = document.querySelectorAll('.matched');
-    if (matchedCards.length === cards.length) {
-        setTimeout(() => {
-            alert(`¡Felicidades! Completaste el juego en ${moves} movimientos.`);
-            resetGame();
-        }, 500);
+    if (matchedCards.length === cardValues.length) {
+        resetGame(); // Llama a resetGame sin mostrar un mensaje
     }
 }
 
 function resetGame() {
-    // Reiniciar el juego
-    memoryBoard.innerHTML = ''; // Vaciar el tablero
-    moves = 0;
-    movesCounter.innerText = `Movimientos: 0`;
-    firstCard = null;
-    secondCard = null;
-    lockBoard = false;
-    
-    // Reordenar las cartas y volver a crearlas
-    cards = cards.sort(() => 0.5 - Math.random());
-    cards.forEach(cardValue => {
-        const cardElement = createCard(cardValue);
-        memoryBoard.appendChild(cardElement);
-    });
+    setTimeout(() => {
+        matchedCards = [];
+        moves = 0;
+        movesDisplay.textContent = `Movimientos: ${moves}`;
+        gameBoard.innerHTML = '';
+        createBoard();
+    }, 3000);
 }
 
-function resetCards() {
-    // Reinicia las variables para las cartas
-    firstCard = null;
-    secondCard = null;
-    lockBoard = false; // Desbloquea el tablero para la siguiente jugada
-}
+createBoard();

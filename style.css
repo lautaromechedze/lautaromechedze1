@@ -1,91 +1,124 @@
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
 body {
-    background-color: #1a1a1a;
-    color: #fff;
-    font-family: 'Arial', sans-serif;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    margin: 0;
+    background-color: #1a1a1a;
+    color: white;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden; /* Evita scroll */
 }
 
-.game-container {
-    text-align: center;
-}
-
-h1 {
-    color: #00ffcc;
-    margin-bottom: 20px;
-    font-size: 2rem;
-}
-
-#memory-board {
-    display: grid;
-    grid-template-columns: repeat(4, 100px);
-    gap: 10px;
+.header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.9);
+    border-bottom: 2px solid #ffcc00;
+    z-index: 100;
 }
 
 .card {
-    width: 100px;
+    width: 100px; /* Tamaño fijo para mantener el diseño */
     height: 100px;
+    margin: 2px; /* Margen reducido para cartas */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #333;
-    border: 3px solid transparent;
-    border-radius: 10px;
+    border: 3px solid #fff;
     cursor: pointer;
-    transform: scale(1);
-    transition: transform 0.3s ease, border-color 0.3s ease;
+    font-size: 2rem;
+    border-radius: 10px;
+    transition: transform 0.3s, box-shadow 0.3s; /* Animaciones para carta */
+}
+
+.card.flipped {
+    background-color: #f39c12;
+    transform: scale(1.05); /* Efecto de aumento al girar */
 }
 
 .card:hover {
-    transform: scale(1.1);
-    border-color: #00ffcc;
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.7); /* Sombra al pasar el mouse */
 }
 
-.card.flipped, .card.matched {
-    background-color: #00ffcc;
-    transform: rotateY(180deg);
-}
-
-#moves {
-    margin-top: 20px;
+#author, #moves {
+    color: #ffcc00;
     font-size: 1.5rem;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
-/* Estilos RGB para las cartas seleccionadas */
-.card.flipped {
-    border: 3px solid;
-    animation: rgb-border 1s infinite;
+#game-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 cartas por fila */
+    gap: 5px; /* Espacio reducido entre las cartas */
+    padding: 20px; /* Espacio general reducido */
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto; /* Centramos horizontalmente */
+    align-items: center; /* Centrar verticalmente */
 }
 
-footer {
-    margin-top: 20px;
-    font-size: 1.2rem;
-    color: #00ffcc;
-    text-align: center;
-    opacity: 0.8;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
-footer p {
-    margin: 0;
-}
-
-
-@keyframes rgb-border {
+@keyframes pulse {
     0% {
-        border-color: #ff0000;
+        transform: scale(1);
     }
-    33% {
-        border-color: #00ff00;
-    }
-    66% {
-        border-color: #0000ff;
+    50% {
+        transform: scale(1.05);
     }
     100% {
-        border-color: #ff0000;
+        transform: scale(1);
+    }
+}
+
+/* Estilo responsivo */
+@media (max-width: 600px) {
+    .header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #author, #moves {
+        font-size: 1.2rem;
+    }
+
+    .card {
+        width: 70px; /* Ajusta el tamaño de las cartas */
+        height: 70px; /* Ajusta el tamaño de las cartas */
+        font-size: 1.5rem;
+    }
+
+    #winMessage {
+        font-size: 2rem;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+    .card {
+        width: 90px; /* Ajusta el tamaño de las cartas */
+        height: 90px; /* Ajusta el tamaño de las cartas */
+    }
+
+    #winMessage {
+        font-size: 2.5rem;
     }
 }
