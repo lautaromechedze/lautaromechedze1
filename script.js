@@ -6,6 +6,14 @@ let moves = 0;
 let matchedCards = [];
 const gameBoard = document.getElementById('game-board');
 const movesDisplay = document.getElementById('moves');
+const winMessage = document.createElement('div');
+winMessage.id = 'winMessage';
+winMessage.textContent = '¡Felicidades! ¡Has ganado!';
+document.body.appendChild(winMessage);
+
+const overlay = document.createElement('div');
+overlay.id = 'overlay';
+document.body.appendChild(overlay);
 
 function createBoard() {
     cardValues.sort(() => 0.5 - Math.random()); // Mezclar cartas
@@ -33,12 +41,32 @@ function flipCard() {
     }
 }
 
+function showWinMessage() {
+    winMessage.classList.add('show');
+    overlay.classList.add('show');
+
+    // Agregar clase de desvanecimiento para el mensaje de victoria
+    winMessage.style.opacity = '1'; 
+    setTimeout(() => {
+        winMessage.style.opacity = '0'; // Comenzar a desvanecer
+    }, 1000); // Esperar un segundo antes de comenzar a desvanecer
+
+    // Esperar a que se desvanecen y luego reiniciar el juego
+    setTimeout(() => {
+        winMessage.classList.remove('show');
+        overlay.classList.remove('show');
+        resetGame();
+    }, 3000); // Tiempo total hasta reiniciar el juego
+}
+
 function checkMatch() {
     const cards = document.querySelectorAll('.card');
     const [firstCardId, secondCardId] = cardsChosenId;
 
     if (cardsChosen[0] === cardsChosen[1]) {
         matchedCards.push(firstCardId, secondCardId);
+        cards[firstCardId].classList.add('matched');
+        cards[secondCardId].classList.add('matched');
         cards[firstCardId].removeEventListener('click', flipCard);
         cards[secondCardId].removeEventListener('click', flipCard);
     } else {
@@ -54,18 +82,22 @@ function checkMatch() {
     movesDisplay.textContent = `Movimientos: ${moves}`;
 
     if (matchedCards.length === cardValues.length) {
-        resetGame(); // Llama a resetGame sin mostrar un mensaje
+        setTimeout(() => {
+            showWinMessage(); // Mostrar cartel de victoria
+        }, 500); // Tiempo de espera antes de mostrar el mensaje
     }
 }
 
 function resetGame() {
+    matchedCards = [];
+    moves = 0;
+    movesDisplay.textContent = `Movimientos: ${moves}`;
+    gameBoard.innerHTML = '';
+
+    // Reiniciar el juego después de un pequeño retraso
     setTimeout(() => {
-        matchedCards = [];
-        moves = 0;
-        movesDisplay.textContent = `Movimientos: ${moves}`;
-        gameBoard.innerHTML = '';
         createBoard();
-    }, 3000);
+    }, 300); // Tiempo de espera para eliminar las cartas
 }
 
 createBoard();

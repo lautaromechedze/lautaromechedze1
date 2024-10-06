@@ -18,14 +18,57 @@ body {
 .header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
     padding: 20px;
     position: fixed;
     top: 0;
     left: 0;
-    background: rgba(0, 0, 0, 0.9);
-    border-bottom: 2px solid #ffcc00;
+    background: rgb(0, 0, 0);
+    border-bottom: 2px solid #00ffea;
     z-index: 100;
+}
+
+/* Agregar margen a los textos para separarlos más */
+#author, #game-title, #moves {
+    color: #1e90ff; /* Azul eléctrico */
+    font-size: 1.5rem;
+    text-shadow: 0 0 15px rgba(30, 144, 255, 0.8); /* Sombra luminosa suave */
+    font-family: 'Courier New', monospace; /* Fuente tipo código */
+    background: rgb(255, 255, 255); /* Fondo semitransparente */
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 2px solid #1e90ff; /* Borde del mismo color que el texto */
+    transition: background 0.3s, color 0.3s; /* Transiciones suaves */
+    text-align: center;
+    margin: 0 20px; /* Espacio entre los textos */
+}
+
+#game-title {
+    font-size: 2rem; /* Tamaño más grande */
+    font-family: 'Orbitron', sans-serif; /* Fuente futurista */
+    background: linear-gradient(90deg, #ff0000, #00ff00, #0000ff);
+    background-size: 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rgbAnimation 3s infinite linear;
+    text-shadow: 0 0 20px rgba(0, 255, 255, 0.7), 0 0 30px rgba(0, 255, 255, 0.5); /* Sombra luminosa */
+    letter-spacing: 3px; /* Espaciado entre letras */
+    text-transform: uppercase; /* Letras mayúsculas */
+}
+
+@keyframes rgbAnimation {
+    0% {
+        background-position: 0%;
+    }
+    100% {
+        background-position: 100%;
+    }
+}
+
+#author:hover, #moves:hover {
+    background: rgba(0, 0, 0, 0.7); /* Cambio de fondo al pasar el ratón */
+    color: #f0f8ff; /* Azul claro */
 }
 
 .card {
@@ -52,21 +95,88 @@ body {
     box-shadow: 0 0 15px rgba(255, 204, 0, 0.7); /* Sombra al pasar el mouse */
 }
 
+.card.matched {
+    background-color: #27ae60; /* Color diferente cuando coincide */
+    animation: pulse 0.5s infinite alternate; /* Efecto de pulsación */
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+#winMessage {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(90deg, #ff0000, #00ff00, #0000ff);
+    background-size: 300%;
+    color: white;
+    padding: 50px;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 2.5rem;
+    text-shadow: 0 0 20px rgba(0, 255, 255, 0.7), 0 0 30px rgba(0, 255, 255, 0.5);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(255, 0, 255, 0.7);
+    animation: rgbAnimation 3s infinite linear;
+    display: none; /* Inicialmente oculto */
+    z-index: 200; /* Para que esté por encima de las cartas */
+    opacity: 0; /* Comienza invisible */
+    transition: opacity 1s ease-in-out; /* Transición para el desvanecimiento */
+}
+
+#winMessage.show {
+    display: block; /* Mostrar el mensaje cuando se gane */
+}
+
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 199;
+    display: none; /* Inicialmente oculto */
+}
+
+#overlay.show {
+    display: block; /* Mostrar la capa oscura */
+}
+
 #author, #moves {
-    color: #ffcc00;
+    color: #1e90ff; /* Azul eléctrico */
     font-size: 1.5rem;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 0 15px rgba(30, 144, 255, 0.8); /* Sombra luminosa suave */
+    font-family: 'Courier New', monospace; /* Fuente tipo código */
+    background: rgba(0, 0, 0, 0.4); /* Fondo semitransparente */
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 2px solid #1e90ff; /* Borde del mismo color que el texto */
+    transition: background 0.3s, color 0.3s; /* Transiciones suaves */
+}
+
+#author:hover, #moves:hover {
+    background: rgba(0, 0, 0, 0.7); /* Cambio de fondo al pasar el ratón */
+    color: #f0f8ff; /* Azul claro */
 }
 
 #game-board {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 cartas por fila */
-    gap: 5px; /* Espacio reducido entre las cartas */
-    padding: 20px; /* Espacio general reducido */
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto; /* Centramos horizontalmente */
-    align-items: center; /* Centrar verticalmente */
+    grid-template-columns: repeat(4, 1fr); /* Alinea las cartas en 4 columnas */
+    gap: 10px; /* Espacio entre cartas */
+    padding: 20px; /* Espacio entre el tablero y el contenido */
+    max-width: 600px; /* Ancho máximo para que no ocupe demasiado espacio */
+    margin-top: 100px; /* Evita que las cartas se superpongan con el encabezado */
 }
 
 @keyframes fadeIn {
