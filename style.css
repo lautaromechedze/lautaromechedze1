@@ -1,3 +1,4 @@
+/* Estilo General */
 * {
     box-sizing: border-box;
 }
@@ -12,12 +13,13 @@ body {
     background-color: #1a1a1a;
     color: white;
     font-family: 'Arial', sans-serif;
-    overflow: hidden; /* Evita scroll */
+    overflow: hidden;
 }
 
+/* Encabezado */
 .header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Centrar todo el contenido del encabezado */
     align-items: center;
     width: 100%;
     padding: 20px;
@@ -29,34 +31,33 @@ body {
     z-index: 100;
 }
 
-/* Agregar margen a los textos para separarlos más */
-#author, #game-title, #moves {
-    color: #1e90ff; /* Azul eléctrico */
+/* Estilos de Texto */
+#author, #game-title, #moves, #timer {
+    color: #00ffea; /* Cambié a un color más vibrante */
     font-size: 1.5rem;
-    text-shadow: 0 0 15px rgba(30, 144, 255, 0.8); /* Sombra luminosa suave */
-    font-family: 'Courier New', monospace; /* Fuente tipo código */
-    background: rgb(255, 255, 255); /* Fondo semitransparente */
+    text-shadow: 0 0 15px rgba(30, 144, 255, 0.8), 0 0 30px rgba(0, 255, 255, 0.5); /* Sombra más pronunciada */
+    font-family: 'Courier New', monospace;
     padding: 10px 20px;
     border-radius: 10px;
-    border: 2px solid #1e90ff; /* Borde del mismo color que el texto */
-    transition: background 0.3s, color 0.3s; /* Transiciones suaves */
+    border: 2px solid #00ffea;
+    margin: 0 10px;
+    transition: background 0.3s, color 0.3s;
     text-align: center;
-    margin: 0 20px; /* Espacio entre los textos */
 }
 
+/* Título del Juego */
 #game-title {
-    font-size: 2rem; /* Tamaño más grande */
-    font-family: 'Orbitron', sans-serif; /* Fuente futurista */
+    font-size: 2rem;
+    font-family: 'Orbitron', sans-serif;
     background: linear-gradient(90deg, #ff0000, #00ff00, #0000ff);
     background-size: 300%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: rgbAnimation 3s infinite linear;
-    text-shadow: 0 0 20px rgba(0, 255, 255, 0.7), 0 0 30px rgba(0, 255, 255, 0.5); /* Sombra luminosa */
-    letter-spacing: 3px; /* Espaciado entre letras */
-    text-transform: uppercase; /* Letras mayúsculas */
+    text-shadow: 0 0 20px rgba(0, 255, 255, 0.7), 0 0 30px rgba(0, 255, 255, 0.5);
 }
 
+/* Animación del Título */
 @keyframes rgbAnimation {
     0% {
         background-position: 0%;
@@ -66,15 +67,22 @@ body {
     }
 }
 
-#author:hover, #moves:hover {
-    background: rgba(0, 0, 0, 0.7); /* Cambio de fondo al pasar el ratón */
-    color: #f0f8ff; /* Azul claro */
+
+/* Tablero del Juego */
+#game-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 20px;
+    max-width: 600px;
+    margin-top: 100px;
 }
 
+/* Cartas */
 .card {
-    width: 100px; /* Tamaño fijo para mantener el diseño */
+    width: 100px;
     height: 100px;
-    margin: 2px; /* Margen reducido para cartas */
+    margin: 2px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -83,35 +91,15 @@ body {
     cursor: pointer;
     font-size: 2rem;
     border-radius: 10px;
-    transition: transform 0.3s, box-shadow 0.3s; /* Animaciones para carta */
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.card.flipped {
-    background-color: #f39c12;
-    transform: scale(1.05); /* Efecto de aumento al girar */
+/* Efectos de Hover en el Título */
+#game-title:hover {
+    text-shadow: 0 0 30px rgba(0, 255, 255, 1), 0 0 50px rgba(0, 255, 255, 0.8);
 }
 
-.card:hover {
-    box-shadow: 0 0 15px rgba(255, 204, 0, 0.7); /* Sombra al pasar el mouse */
-}
-
-.card.matched {
-    background-color: #27ae60; /* Color diferente cuando coincide */
-    animation: pulse 0.5s infinite alternate; /* Efecto de pulsación */
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
+/* Mensaje de Victoria */
 #winMessage {
     position: fixed;
     top: 50%;
@@ -125,110 +113,47 @@ body {
     text-align: center;
     font-size: 2.5rem;
     text-shadow: 0 0 20px rgba(0, 255, 255, 0.7), 0 0 30px rgba(0, 255, 255, 0.5);
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(255, 0, 255, 0.7);
-    animation: rgbAnimation 3s infinite linear;
-    display: none; /* Inicialmente oculto */
-    z-index: 200; /* Para que esté por encima de las cartas */
-    opacity: 0; /* Comienza invisible */
-    transition: opacity 1s ease-in-out; /* Transición para el desvanecimiento */
+    display: none;
+    z-index: 200;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
 }
 
+/* Mostrar Mensaje de Victoria */
 #winMessage.show {
-    display: block; /* Mostrar el mensaje cuando se gane */
+    display: block;
+    opacity: 1;
 }
 
-
-#overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.8);
-    z-index: 199;
-    display: none; /* Inicialmente oculto */
+/* Botones de Dificultad */
+#difficulty {
+    margin: 20px;
 }
 
-#overlay.show {
-    display: block; /* Mostrar la capa oscura */
-}
-
-#author, #moves {
-    color: #1e90ff; /* Azul eléctrico */
-    font-size: 1.5rem;
-    text-shadow: 0 0 15px rgba(30, 144, 255, 0.8); /* Sombra luminosa suave */
-    font-family: 'Courier New', monospace; /* Fuente tipo código */
-    background: rgba(0, 0, 0, 0.4); /* Fondo semitransparente */
+.difficulty-button {
     padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 10px;
+}
+
+
+/* Tabla de Puntuaciones */
+#leaderBoard {
+    padding: 0;
+    list-style: none;
+}
+
+/* Tabla de Clasificación */
+#scoreBoard {
+    display: none;
+    position: fixed;
+    top: 10%;
+    right: 10%;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
     border-radius: 10px;
-    border: 2px solid #1e90ff; /* Borde del mismo color que el texto */
-    transition: background 0.3s, color 0.3s; /* Transiciones suaves */
-}
-
-#author:hover, #moves:hover {
-    background: rgba(0, 0, 0, 0.7); /* Cambio de fondo al pasar el ratón */
-    color: #f0f8ff; /* Azul claro */
-}
-
-#game-board {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Alinea las cartas en 4 columnas */
-    gap: 10px; /* Espacio entre cartas */
-    padding: 20px; /* Espacio entre el tablero y el contenido */
-    max-width: 600px; /* Ancho máximo para que no ocupe demasiado espacio */
-    margin-top: 100px; /* Evita que las cartas se superpongan con el encabezado */
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-/* Estilo responsivo */
-@media (max-width: 600px) {
-    .header {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    #author, #moves {
-        font-size: 1.2rem;
-    }
-
-    .card {
-        width: 70px; /* Ajusta el tamaño de las cartas */
-        height: 70px; /* Ajusta el tamaño de las cartas */
-        font-size: 1.5rem;
-    }
-
-    #winMessage {
-        font-size: 2rem;
-    }
-}
-
-@media (min-width: 601px) and (max-width: 900px) {
-    .card {
-        width: 90px; /* Ajusta el tamaño de las cartas */
-        height: 90px; /* Ajusta el tamaño de las cartas */
-    }
-
-    #winMessage {
-        font-size: 2.5rem;
-    }
+    border: 2px solid #1e90ff;
+    color: white;
+    font-family: 'Orbitron', sans-serif;
 }
