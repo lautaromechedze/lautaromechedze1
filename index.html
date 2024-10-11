@@ -9,14 +9,18 @@
 <body>
     <div class="header">
         <div id="author">Hecho por Laucha</div>
-        <div id="game-title">Juego de Memoria</div> <!-- Título del juego en el medio -->
+        <div id="game-title">Juego de Memoria</div>
         <div id="moves">Movimientos: 0</div>
-        <div id="timer">Tiempo: 00:00</div>
     </div>
 
     <div id="game-board"></div>
 
-    <div id="winMessage">¡Felicidades! ¡Has ganado!</div>
+    <div id="winMessage" class="win-message">
+        <h1>¡Felicidades!</h1>
+        <p>Has ganado el juego</p>
+        <button id="play-again">Jugar de nuevo</button>
+    </div>
+
     <div id="overlay"></div>
 
     <script src="script.js"></script>

@@ -10,8 +10,11 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #1a1a1a;
-    color: white;
+    background-image: url('A_vibrant_and_colorful_abstract_background_for_a_m.png');
+    background-size: cover; /* O usa 'contain' si prefieres */
+    background-repeat: no-repeat; /* Evitar que se repita */
+    background-position: center; /* Centrar la imagen */
+    color: rgb(0, 0, 0);
     font-family: 'Arial', sans-serif;
     overflow: hidden;
 }
@@ -19,23 +22,23 @@ body {
 /* Encabezado */
 .header {
     display: flex;
-    justify-content: center; /* Centrar todo el contenido del encabezado */
+    justify-content: center;
     align-items: center;
     width: 100%;
     padding: 20px;
     position: fixed;
     top: 0;
     left: 0;
-    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.8);
     border-bottom: 2px solid #00ffea;
     z-index: 100;
 }
 
 /* Estilos de Texto */
-#author, #game-title, #moves, #timer {
-    color: #00ffea; /* Cambié a un color más vibrante */
+#author, #game-title, #moves {
+    color: #00ffea;
     font-size: 1.5rem;
-    text-shadow: 0 0 15px rgba(30, 144, 255, 0.8), 0 0 30px rgba(0, 255, 255, 0.5); /* Sombra más pronunciada */
+    text-shadow: 0 0 15px rgba(30, 144, 255, 0.8), 0 0 30px rgba(0, 255, 255, 0.5);
     font-family: 'Courier New', monospace;
     padding: 10px 20px;
     border-radius: 10px;
@@ -47,26 +50,29 @@ body {
 
 /* Título del Juego */
 #game-title {
-    font-size: 2rem;
-    font-family: 'Orbitron', sans-serif;
-    background: linear-gradient(90deg, #ff0000, #00ff00, #0000ff);
-    background-size: 300%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: rgbAnimation 3s infinite linear;
-    text-shadow: 0 0 20px rgba(0, 255, 255, 0.7), 0 0 30px rgba(0, 255, 255, 0.5);
+    font-size: 3rem;
+    font-family: 'Impact', sans-serif;
+    color: #00ffea;
+    text-shadow: 0 0 30px rgba(30, 144, 255, 0.8), 0 0 60px rgba(0, 255, 255, 0.5);
+    padding: 5px;
+    border-radius: 15px;
+    border: 3px solid #00ffea;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5));
+    margin: 10px 20px;
+    transition: transform 0.3s, color 0.3s;
+    text-align: center;
+    animation: pulse 1.5s infinite;
 }
 
-/* Animación del Título */
-@keyframes rgbAnimation {
-    0% {
-        background-position: 0%;
+/* Efecto de pulsación */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
     }
-    100% {
-        background-position: 100%;
+    50% {
+        transform: scale(1.05);
     }
 }
-
 
 /* Tablero del Juego */
 #game-board {
@@ -75,7 +81,7 @@ body {
     gap: 10px;
     padding: 20px;
     max-width: 600px;
-    margin-top: 100px;
+    margin-top: 120px; /* Aumentar margen superior para espacio visual */
 }
 
 /* Cartas */
@@ -89,59 +95,42 @@ body {
     background-color: #333;
     border: 3px solid #fff;
     cursor: pointer;
-    font-size: 2rem;
+    font-size: 5rem; /* Aumenta este valor para hacer los emojis más grandes */
     border-radius: 10px;
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
-/* Efectos de Hover en el Título */
-#game-title:hover {
-    text-shadow: 0 0 30px rgba(0, 255, 255, 1), 0 0 50px rgba(0, 255, 255, 0.8);
+/* Efecto de Hover en las Cartas */
+.card:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
 }
 
 /* Mensaje de Victoria */
-#winMessage {
+.win-message {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: linear-gradient(90deg, #ff0000, #00ff00, #0000ff);
-    background-size: 300%;
+    background: linear-gradient(135deg, #ff007f, #ffcc00);
     color: white;
-    padding: 50px;
+    padding: 40px 60px;
     border-radius: 20px;
     text-align: center;
-    font-size: 2.5rem;
-    text-shadow: 0 0 20px rgba(0, 255, 255, 0.7), 0 0 30px rgba(0, 255, 255, 0.5);
-    display: none;
+    font-size: 2rem;
+    text-shadow: 0 0 20px rgba(255, 0, 127, 0.8), 0 0 30px rgba(255, 204, 0, 0.5);
+    display: none; /* Cambiar a none para que no se muestre inicialmente */
     z-index: 200;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
+    opacity: 0; /* Comienza como invisible */
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; /* Suavizar la aparición */
+    box-shadow: 0 0 50px rgba(255, 0, 127, 0.5), 0 0 100px rgba(255, 204, 0, 0.5);
 }
 
 /* Mostrar Mensaje de Victoria */
 #winMessage.show {
-    display: block;
-    opacity: 1;
-}
-
-/* Botones de Dificultad */
-#difficulty {
-    margin: 20px;
-}
-
-.difficulty-button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    margin: 10px;
-}
-
-
-/* Tabla de Puntuaciones */
-#leaderBoard {
-    padding: 0;
-    list-style: none;
+    display: block; /* Mostrar el mensaje */
+    opacity: 1; /* Hacerlo visible */
+    transform: translate(-50%, -50%) scale(1.1); /* Aumentar el tamaño al mostrar */
 }
 
 /* Tabla de Clasificación */
