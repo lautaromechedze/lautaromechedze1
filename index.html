@@ -21,7 +21,29 @@
         <button id="play-again">Jugar de nuevo</button>
     </div>
 
+    <div class="settings">
+        <button id="settings-btn">Configuración</button>
+        <div id="settings-menu" class="settings-menu">
+            <h2>Configuración</h2>
+            <div class="setting-item">
+                <label for="volume-control">Volumen:</label>
+                <input type="range" id="volume-control" min="0" max="1" step="0.1" value="1">
+            </div>
+            <div class="setting-item">
+                <label for="bg-selector">Fondo del Juego:</label>
+                <select id="bg-selector">
+                    <option value="default">Predeterminado</option>
+                    <option value="fondo1">Fondo 1</option>
+                    <option value="fondo2">Fondo 2</option>
+                </select>
+            </div>
+            <button id="close-settings">Cerrar</button>
+        </div>
+    </div>    
+
     <div id="overlay"></div>
+    
+    <div id="confetti"></div>
 
     <script src="script.js"></script>
 </body>

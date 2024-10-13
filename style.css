@@ -84,6 +84,133 @@ body {
     margin-top: 120px; /* Aumentar margen superior para espacio visual */
 }
 
+#settings-btn {
+    position: fixed;
+    top: 42px;
+    right: 42px;
+    background-color: #1e90ff;
+    color: white;
+    border: 2px solid #00ffea;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    z-index: 100;
+}
+
+#settings-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8), 0 0 30px rgba(30, 144, 255, 0.8);
+}
+
+/* Menú de Configuración */
+.settings-menu {
+    display: none;
+    position: fixed;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: #00ffea;
+    padding: 30px;
+    border-radius: 20px;
+    border: 3px solid #00ffea;
+    text-align: center;
+    z-index: 101;
+    width: 300px;
+    box-shadow: 0 0 40px rgba(30, 144, 255, 0.5), 0 0 60px rgba(0, 255, 255, 0.5);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Animación de aparición */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(50%, -60%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(50%, -50%);
+    }
+}
+
+/* Estilos de cada opción del menú */
+.setting-item {
+    margin-bottom: 20px;
+}
+
+.setting-item label {
+    font-size: 1.2rem;
+    margin-right: 10px;
+}
+
+#volume-control {
+    width: 100%;
+    background-color: #00ffea;
+    border-radius: 5px;
+}
+
+#bg-selector {
+    padding: 10px;
+    font-size: 1.1rem;
+    background-color: #1e90ff;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    transition: background 0.3s;
+}
+
+#bg-selector:hover {
+    background-color: #00ffea;
+}
+
+/* Botón de Cerrar */
+#close-settings {
+    background-color: #ff007f;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+#close-settings:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 0, 127, 0.8), 0 0 40px rgba(255, 0, 127, 0.5);
+}
+
+/* Estilo del confeti */
+#confetti {
+    position: fixed;
+    top: 0; /* Cambiar la posición top a 0 para que inicie desde la parte superior */
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Para que los clics no afecten al confeti */
+    overflow: hidden; /* Para evitar que el confeti salga del contenedor */
+    z-index: 300; /* Asegúrate de que esté por encima de otros elementos */
+    display: none; /* Ocultar inicialmente */
+}
+
+.confetti-piece {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #ffcc00;
+    opacity: 0.8;
+    pointer-events: none;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(360deg);
+    }
+}
+
 /* Cartas */
 .card {
     width: 100px;
@@ -105,7 +232,6 @@ body {
     transform: scale(1.1);
     box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
 }
-
 /* Mensaje de Victoria */
 .win-message {
     position: fixed;
@@ -131,6 +257,19 @@ body {
     display: block; /* Mostrar el mensaje */
     opacity: 1; /* Hacerlo visible */
     transform: translate(-50%, -50%) scale(1.1); /* Aumentar el tamaño al mostrar */
+}
+
+/* Botón de Repetir */
+#play-again {
+    background-color: #00ffea;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    color: #1a1a1a;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background 0.3s, transform 0.3s;
 }
 
 /* Tabla de Clasificación */
